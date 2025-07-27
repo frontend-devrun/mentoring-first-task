@@ -19,6 +19,8 @@ import { LocalStorageService } from '../../data/services/local-storage.service';
     AsyncPipe,
     MatIconModule,
     MatButtonModule,
+    MatDividerModule,
+
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss'
@@ -31,6 +33,9 @@ export class UsersListComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   readonly usersService = inject(UsersService)
   public localStorage = inject(LocalStorageService)
+
+
+
 
 
   ngOnInit() {
