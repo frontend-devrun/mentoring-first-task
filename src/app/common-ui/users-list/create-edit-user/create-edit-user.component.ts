@@ -46,7 +46,6 @@ export class CreateEditUserComponent {
       this.form.patchValue(
         {
           ...this.data.user,
-          address: { city: this.data.user.address.city },
           company: { name: this.data.user.company.name }
         });
     }

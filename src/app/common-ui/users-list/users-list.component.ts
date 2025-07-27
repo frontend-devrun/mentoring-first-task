@@ -1,5 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { UserCardComponent } from "../user-card/user-card.component";
+import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateEditUserComponent } from './create-edit-user/create-edit-user.component';
 import { IUser } from '../../data/interfaces/user.interface';
 import { LocalStorageService } from '../../data/services/local-storage.service';
+import { decrement, increment, reset } from '../../store/users/user.actions';
 
 
 @Component({
@@ -33,6 +35,11 @@ export class UsersListComponent implements OnInit {
   readonly usersService = inject(UsersService)
   public localStorage = inject(LocalStorageService)
 
+  public store = inject(Store);
+
+  public count$ = this.store.select('count');
+
+
   ngOnInit() {
     let users = JSON.parse(this.localStorage.getItem('users')!)
 
@@ -41,6 +48,21 @@ export class UsersListComponent implements OnInit {
     }
     this.usersService.updateUsers(users)
   }
+
+
+  increment() {
+    this.store.dispatch(increment());
+  }
+
+  decrement() {
+    this.store.dispatch(decrement());
+  }
+
+  reset() {
+    this.store.dispatch(reset());
+  }
+
+
 
   addUser() {
     this.dialog.open(CreateEditUserComponent)
