@@ -1,0 +1,28 @@
+<ul class="user-card">
+  <li class="user-card__name">🙍 {{ user.name }}</li>
+  <li class="user-card__details">👤 {{ user.username }}</li>
+  <li class="user-card__details">☎️ {{ user.phone }}</li>
+  <li class="user-card__details">🏛️ {{ user.company.name }}</li>
+  <li class="user-card__details">📧 {{ user.email }}</li>
+  <li class="user-card__details">🌐 {{ user.website }}</li>
+  <li>
+    <div class="user-card__actions">
+      <button
+        button="submit"
+        mat-raised-button
+        color="primary"
+        (click)="deleteUser(user.id)"
+      >
+        <mat-icon>delete</mat-icon>Delete
+      </button>
+      <button
+        button="submit"
+        mat-raised-button
+        color="primary"
+        (click)="openEditUserDialog()"
+      >
+        <mat-icon>edit</mat-icon>Edit
+      </button>
+    </div>
+  </li>
+</ul>

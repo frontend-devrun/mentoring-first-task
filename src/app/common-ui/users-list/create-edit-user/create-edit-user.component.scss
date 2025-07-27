@@ -1,0 +1,15 @@
+:host {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding: 25px 20px;
+}
+.profile-form__wrapper {
+  display: flex;
+  min-width: 300px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.profile-form {
+  display: grid;
+  height: 100%;
+}

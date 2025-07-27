@@ -1,0 +1,84 @@
+<form class="profile-form__wrapper" [formGroup]="form">
+  <div class="profile-form">
+    <mat-form-field appearance="outline">
+      <mat-label>name</mat-label>
+      <input
+        formControlName="name"
+        matInput
+        required
+        placeholder="Placeholder"
+        placeholder="Введите данные"
+      />
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>username</mat-label>
+      <input
+        formControlName="username"
+        matInput
+        required
+        placeholder="Placeholder"
+        placeholder="Введите данные"
+      />
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>phone</mat-label>
+      <input
+        formControlName="phone"
+        matInput
+        required
+        placeholder="Placeholder"
+        placeholder="Введите данные"
+      />
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" formGroupName="company">
+      <mat-label>company</mat-label>
+      <input
+        formControlName="name"
+        matInput
+        required
+        placeholder="Placeholder"
+        placeholder="Введите данные"
+      />
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>email</mat-label>
+      <input
+        formControlName="email"
+        matInput
+        required
+        placeholder="Placeholder"
+        placeholder="Введите данные"
+      />
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>website</mat-label>
+      <input
+        formControlName="website"
+        matInput
+        required
+        placeholder="Placeholder"
+        placeholder="Введите данные"
+      />
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+  </div>
+  <button
+    [disabled]="!form.valid"
+    type="submit"
+    mat-raised-button
+    color="primary"
+    (click)="editUser(); createUser()"
+  >
+    <mat-icon>add</mat-icon>
+    @if(data?.user){ Save }@else { Add }
+  </button>
+</form>

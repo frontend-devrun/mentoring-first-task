@@ -1,0 +1,16 @@
+@for(user of usersService.usersSubject| async; track user.id){
+<app-user-card
+  [user]="user"
+  (onEditUser)="onEditUser($event)"
+  (onDeleteUser)="onDeleteUser($event)"
+/>
+}
+<button
+  class="create-user-btn"
+  button="submit"
+  mat-raised-button
+  color="primary"
+  (click)="addUser()"
+>
+  <mat-icon>add</mat-icon> Add user
+</button>
