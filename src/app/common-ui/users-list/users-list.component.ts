@@ -20,7 +20,6 @@ import { LocalStorageService } from '../../data/services/local-storage.service';
     MatIconModule,
     MatButtonModule,
     MatDividerModule,
-
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss'
@@ -34,10 +33,6 @@ export class UsersListComponent implements OnInit {
   readonly usersService = inject(UsersService)
   public localStorage = inject(LocalStorageService)
 
-
-
-
-
   ngOnInit() {
     let users = JSON.parse(this.localStorage.getItem('users')!)
 
@@ -46,8 +41,6 @@ export class UsersListComponent implements OnInit {
     }
     this.usersService.updateUsers(users)
   }
-
-
 
   addUser() {
     this.dialog.open(CreateEditUserComponent)
