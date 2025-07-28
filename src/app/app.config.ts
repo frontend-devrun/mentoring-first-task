@@ -1,17 +1,18 @@
 import { ApplicationConfig } from '@angular/core';
-import { importProvidersFrom } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
+import { routes } from './app.routes';
 import { userReducer } from './store/users/user.reducer';
+import { UsersEffects } from './store/users/users.effects';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(StoreModule.forRoot({ count: userReducer })),
+    provideStore({ users: userReducer }),
+    provideEffects([UsersEffects]),
     provideNoopAnimations(),
     provideRouter(routes)
     , provideHttpClient()

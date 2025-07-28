@@ -1,3 +1,4 @@
+
 export interface IUser {
     id: number
     name: string
@@ -10,4 +11,16 @@ export interface IUser {
         name: string
     }
     website: string
+}
+
+export interface ApiError {
+    message: string;
+    code?: number;
+}
+
+
+export interface UsersState {
+    users: IUser[];
+    error: ApiError | null;
+    loading: boolean;
 }

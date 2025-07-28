@@ -1,4 +1,4 @@
-@for(user of usersService.usersSubject| async; track user.id){
+@for(user of users$| async; track user.id){
 <app-user-card
   [user]="user"
   (onEditUser)="onEditUser($event)"
@@ -14,16 +14,7 @@
 >
   <mat-icon>add</mat-icon> Add user
 </button>
-<!-- <button mat-raised-button color="primary" (click)="increment()">
-  Increment
-</button>
 
-<div>Current Count: {{ count$ | async }}</div>
-
-<button mat-raised-button color="primary" (click)="decrement()">
-  Decrement
-</button>
-
-<button mat-raised-button color="primary" (click)="reset()">
-  Reset Counter
-</button> -->
+<span *ngIf="error$ | async as error" class="error">
+  {{ error?.message || "Что-то пошло не так!" }}
+</span>

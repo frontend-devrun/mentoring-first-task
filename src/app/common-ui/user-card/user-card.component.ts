@@ -26,8 +26,7 @@ export class UserCardComponent {
     this.dialog.open(CreateEditUserComponent, {
       data: { user: this.user },
     }).afterClosed().subscribe(user => {
-      if (user)
-        this.onEditUser.emit({ ...user, id: this.user.id })
+      if (user) this.onEditUser.emit({ ...user, id: this.user.id })
     });
   }
 
