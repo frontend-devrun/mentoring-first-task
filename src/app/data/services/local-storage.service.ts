@@ -1,19 +1,32 @@
-import { Injectable } from '@angular/core';
-import { IUser } from '../interfaces/user.interface';
+import { inject, Injectable } from "@angular/core";
+import { UsersService } from "./users-service";
+import { IUser } from "../interfaces/user.interface";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class LocalStorageService {
+  public readonly usersService = inject(UsersService);
 
-  constructor() { }
+  constructor() {
+    let users = this.getItem("users");
 
-  setItem(key: string, value: string) {
-    window.localStorage.setItem(key, value)
+    if (users.length > 0) {
+      this.usersService.usersSubject.next(users);
+    } else {
+      this.usersService.loadUsers();
+    }
+
+    this.usersService.users$.subscribe((res) => {
+      this.setItem("users", res);
+    });
   }
 
-  getItem(key: string): string | null {
-    return window.localStorage.getItem(key)
+  private setItem(key: string, value: IUser[]) {
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
+  private getItem(key: string): IUser[] {
+    return JSON.parse(localStorage.getItem(key) ?? "");
+  }
 }

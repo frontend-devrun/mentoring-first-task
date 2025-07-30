@@ -1,9 +1,9 @@
-@for(user of usersService.usersSubject| async; track user.id){
-<app-user-card
-  [user]="user"
-  (onEditUser)="onEditUser($event)"
-  (onDeleteUser)="onDeleteUser($event)"
-/>
+@for (user of usersService.usersSubject | async; track user.id) {
+  <app-user-card
+    [user]="user"
+    (onEditUser)="onEditUser($event)"
+    (onDeleteUser)="onDeleteUser($event)"
+  />
 }
 <button
   class="create-user-btn"
@@ -12,18 +12,6 @@
   color="primary"
   (click)="addUser()"
 >
-  <mat-icon>add</mat-icon> Add user
+  <mat-icon>add</mat-icon>
+  Add user
 </button>
-<!-- <button mat-raised-button color="primary" (click)="increment()">
-  Increment
-</button>
-
-<div>Current Count: {{ count$ | async }}</div>
-
-<button mat-raised-button color="primary" (click)="decrement()">
-  Decrement
-</button>
-
-<button mat-raised-button color="primary" (click)="reset()">
-  Reset Counter
-</button> -->

@@ -1,13 +1,10 @@
 export interface IUser {
-    id: number
-    name: string
-    username: string
-    email: string
-    phone: string,
-    company: {
-        bs: string
-        catchPhrase: string
-        name: string
-    }
-    website: string
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  phone: string;
+  address: { city: string };
+  company: { name: string };
+  website: string;
 }

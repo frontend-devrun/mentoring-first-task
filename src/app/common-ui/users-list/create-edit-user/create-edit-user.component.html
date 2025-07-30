@@ -58,7 +58,17 @@
       />
       <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
     </mat-form-field>
-
+    <mat-form-field appearance="outline" formGroupName="address">
+      <mat-label>address</mat-label>
+      <input
+        formControlName="city"
+        matInput
+        required
+        placeholder="Placeholder"
+        placeholder="Введите данные"
+      />
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>website</mat-label>
       <input
@@ -76,9 +86,13 @@
     type="submit"
     mat-raised-button
     color="primary"
-    (click)="editUser(); createUser()"
+    (click)="saveUser()"
   >
     <mat-icon>add</mat-icon>
-    @if(data?.user){ Save }@else { Add }
+    @if (data && data.user) {
+      Save
+    } @else {
+      Add
+    }
   </button>
 </form>
