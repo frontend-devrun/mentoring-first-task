@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { addUser, deleteUser, editUser, loadUsersFailure, loadUsersSuccess } from './user.actions';
-import { IUser, UsersState } from '../../data/interfaces/user.interface';
+import { UsersState } from '../../data/interfaces/user.interface';
 
 
 export const initialState: UsersState = {
