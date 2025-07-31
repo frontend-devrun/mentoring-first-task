@@ -8,22 +8,12 @@
   <li class="user-card__details">🌐 {{ user.website }}</li>
   <li>
     <div class="user-card__actions">
-      <button
-        type="submit"
-        mat-raised-button
-        color="primary"
-        (click)="deleteUser(user.id)"
-      >
+      <button type="submit" mat-raised-button color="primary" (click)="deleteUser(user.id)">
         <mat-icon>delete</mat-icon>
         Delete
       </button>
 
-      <button
-        type="submit"
-        mat-raised-button
-        color="primary"
-        (click)="openEditUserDialog()"
-      >
+      <button type="submit" mat-raised-button color="primary" (click)="openEditUserDialog()">
         <mat-icon>edit</mat-icon>
         Edit
       </button>

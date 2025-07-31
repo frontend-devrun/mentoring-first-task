@@ -3,5 +3,5 @@ import { UsersListComponent } from "./common-ui/users-list/users-list.component"
 
 export const routes: Routes = [
   { path: "", redirectTo: "users", pathMatch: "full" },
-  { path: "users", component: UsersListComponent },
+  { path: "users", component: UsersListComponent }
 ];

@@ -1,10 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { IUser } from "../interfaces/user.interface";
 import { Observable } from "rxjs";
 
+import { IUser } from "../interfaces/user.interface";
+
 @Injectable({
-  providedIn: "root",
+  providedIn: "root"
 })
 export class UsersApiService {
   private readonly http = inject(HttpClient);

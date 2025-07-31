@@ -1,7 +1,11 @@
 {
   "semi": true,
   "singleQuote": false,
-  "printWidth": 80,
+  "printWidth": 100,
   "tabWidth": 2,
-  "trailingComma": "all"
+  "trailingComma": "none",
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"],
+  "importOrder": ["^@angular/(.*)$", "^[a-zA-Z].*$", "^@/.*$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

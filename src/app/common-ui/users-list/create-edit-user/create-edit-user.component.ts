@@ -1,18 +1,18 @@
-import { Component, inject } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Component, inject, OnInit } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
-} from "@angular/material/dialog";
-import { MatInputModule } from "@angular/material/input";
+
+import { MatButtonModule } from "@angular/material/button";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
-import { CommonModule } from "@angular/common";
-import { MatButtonModule } from "@angular/material/button";
+import { MatInputModule } from "@angular/material/input";
+
 import { IUser } from "../../../data/interfaces/user.interface";
 
-type DialogData = { user: IUser };
+interface DialogData {
+  user: IUser;
+}
 
 @Component({
   selector: "app-create-edit-user",
@@ -23,34 +23,33 @@ type DialogData = { user: IUser };
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: "./create-edit-user.component.html",
-  styleUrl: "./create-edit-user.component.scss",
+  styleUrl: "./create-edit-user.component.scss"
 })
-export class CreateEditUserComponent {
+export class CreateEditUserComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
 
   public readonly dialog = inject(MatDialog);
 
-  private readonly dialogRef: MatDialogRef<CreateEditUserComponent, IUser> =
-    inject(MatDialogRef);
+  private readonly dialogRef: MatDialogRef<CreateEditUserComponent, IUser> = inject(MatDialogRef);
 
   public readonly data: DialogData = inject(MAT_DIALOG_DATA);
 
-  form = this.fb.group({
+  form = this.fb.nonNullable.group({
     name: ["", Validators.required],
     username: ["", Validators.required],
     phone: ["", Validators.required],
-    company: this.fb.group({
-      name: ["", Validators.required],
+    company: this.fb.nonNullable.group({
+      name: ["", Validators.required]
     }),
-    address: this.fb.group({
-      city: ["", Validators.required],
+    address: this.fb.nonNullable.group({
+      city: ["", Validators.required]
     }),
     email: ["", Validators.required],
 
-    website: ["", Validators.required],
+    website: ["", Validators.required]
   });
 
   ngOnInit() {
@@ -59,22 +58,7 @@ export class CreateEditUserComponent {
     }
   }
 
-  saveUser() {
-    const result: IUser = {
-      ...this.form.value,
-      id: new Date().getTime(),
-      name: this.form.value.name ?? "",
-      username: this.form.value.username ?? "",
-      phone: this.form.value.phone ?? "",
-      email: this.form.value.email ?? "",
-      company: {
-        name: this.form.value.company?.name ?? "",
-      },
-      address: {
-        city: this.form.value.address?.city ?? "",
-      },
-      website: this.form.value.website ?? "",
-    };
-    this.dialogRef.close(result);
+  saveUser(): void {
+    this.dialogRef.close({ ...this.form.getRawValue(), id: new Date().getTime() });
   }
 }

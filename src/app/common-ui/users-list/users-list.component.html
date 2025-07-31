@@ -1,4 +1,4 @@
-@for (user of usersService.usersSubject | async; track user.id) {
+@for (user of usersService.users$ | async; track user.id) {
   <app-user-card
     [user]="user"
     (onEditUser)="onEditUser($event)"

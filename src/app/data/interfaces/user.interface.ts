@@ -4,7 +4,11 @@ export interface IUser {
   username: string;
   email: string;
   phone: string;
-  address: { city: string };
-  company: { name: string };
+  address: {
+    city: string;
+  };
+  company: {
+    name: string;
+  };
   website: string;
 }
