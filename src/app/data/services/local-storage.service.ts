@@ -1,22 +1,20 @@
 import { Injectable } from "@angular/core";
 
-import { IUser } from "../interfaces/user.interface";
-
-interface ILocalStorageService {
-  setItem(key: string, value: IUser[]): void;
-  getItem(key: string): IUser[];
+interface ILocalStorageService<T> {
+  setItem(key: string, value: T): void;
+  getItem(key: string): T;
 }
 
 @Injectable({
   providedIn: "root"
 })
-export class LocalStorageService implements ILocalStorageService {
-  public setItem(key: string, value: IUser[]) {
+export class LocalStorageService<T> implements ILocalStorageService<T> {
+  public setItem(key: string, value: T = <T>[]) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  public getItem(key: string): IUser[] {
+  public getItem(key: string): T {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : [];
+    return item ? JSON.parse(item) : <T>null;
   }
 }

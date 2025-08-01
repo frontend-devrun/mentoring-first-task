@@ -1,8 +1,9 @@
 import { inject, Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, of, tap } from "rxjs";
 
 import { IUser } from "../interfaces/user.interface";
 
+import { LocalStorageService } from "./local-storage.service";
 import { UsersApiService } from "./users-api.service";
 
 @Injectable({
@@ -13,29 +14,42 @@ export class UsersService {
 
   public readonly usersApiService = inject(UsersApiService);
 
-  public loadUsers(): void {
-    this.usersApiService.getUsers().subscribe((users: IUser[]) => this.usersSubject$.next(users));
-  }
-
-  public setUsers(users: IUser[]) {
-    this.usersSubject$.next(users);
-  }
+  public readonly localStorageService = inject(LocalStorageService);
 
   public get users$(): Observable<IUser[]> {
     return this.usersSubject$.asObservable();
   }
 
+  public getUsers(): Observable<IUser[]> {
+    const stored = this.localStorageService.getItem("users");
+
+    if (stored?.length) {
+      this.usersSubject$.next(stored);
+      return of(stored);
+    } else {
+      return this.usersApiService.getUsers().pipe(
+        tap((users) => {
+          this.usersSubject$.next(users);
+          this.localStorageService.setItem("users", users);
+        })
+      );
+    }
+  }
+
   public deleteUser(id: number): void {
+    console.log(id);
     this.usersSubject$.next(this.usersSubject$.value.filter((user: IUser) => user.id !== id));
+    this.localStorageService.setItem("users", this.usersSubject$.value);
   }
 
   public editUser(data: IUser): void {
-    this.usersSubject$.next(
-      this.usersSubject$.value.map((user: IUser) => (user.id === data.id ? data : user))
-    );
+    let current = this.usersSubject$.value;
+    this.usersSubject$.next(current.map((user: IUser) => (user.id === data.id ? data : user)));
+    this.localStorageService.setItem("users", this.usersSubject$.value);
   }
 
   public createUser(user: IUser): void {
     this.usersSubject$.next([...this.usersSubject$.value, user]);
+    this.localStorageService.setItem("users", this.usersSubject$.value);
   }
 }
