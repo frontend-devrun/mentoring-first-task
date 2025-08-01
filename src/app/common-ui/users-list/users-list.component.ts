@@ -7,7 +7,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { CreateEditUserComponent } from "./create-edit-user/create-edit-user.component";
 
 import { IUser } from "../../data/interfaces/user.interface";
-import { LocalStorageService } from "../../data/services/local-storage.service";
 import { UsersService } from "../../data/services/users-service";
 import { UserCardComponent } from "../user-card/user-card.component";
 
@@ -24,8 +23,6 @@ export class UsersListComponent {
   readonly dialog = inject(MatDialog);
 
   readonly usersService = inject(UsersService);
-
-  public localStorageService = inject(LocalStorageService);
 
   ngOnInit(): void {
     this.usersService.getUsers().subscribe();

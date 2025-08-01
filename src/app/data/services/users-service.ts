@@ -3,37 +3,43 @@ import { BehaviorSubject, Observable, of, tap } from "rxjs";
 
 import { IUser } from "../interfaces/user.interface";
 
-import { LocalStorageService } from "./local-storage.service";
+import { IStorage, LocalStorageService } from "./local-storage.service";
 import { UsersApiService } from "./users-api.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class UsersService {
+  public readonly USERS_LOCAL_STORAGE_KEY: string = "users";
+
   private readonly usersSubject$ = new BehaviorSubject<IUser[]>([]);
 
   public readonly usersApiService = inject(UsersApiService);
 
-  public readonly localStorageService = inject(LocalStorageService);
+  public readonly localStorageService = inject<IStorage<IUser[]>>(LocalStorageService);
 
   public get users$(): Observable<IUser[]> {
     return this.usersSubject$.asObservable();
   }
 
   private saveToLocalStorage() {
-    this.localStorageService.setItem("users", this.usersSubject$.value);
+    this.localStorageService.setItem(this.USERS_LOCAL_STORAGE_KEY, this.usersSubject$.getValue());
+  }
+
+  private setUsers(users: IUser[]) {
+    this.usersSubject$.next(users);
   }
 
   public getUsers(): Observable<IUser[]> {
-    const stored = this.localStorageService.getItem("users");
+    const stored: IUser[] = this.localStorageService.getItem(this.USERS_LOCAL_STORAGE_KEY);
 
     if (stored?.length) {
-      this.usersSubject$.next(stored);
+      this.setUsers(stored);
       return of(stored);
     } else {
       return this.usersApiService.getUsers().pipe(
-        tap((users) => {
-          this.usersSubject$.next(users);
+        tap((users: IUser[]) => {
+          this.setUsers(users);
           this.saveToLocalStorage();
         })
       );
@@ -41,18 +47,22 @@ export class UsersService {
   }
 
   public deleteUser(id: number): void {
-    this.usersSubject$.next(this.usersSubject$.value.filter((user: IUser) => user.id !== id));
+    const filteredUsers = this.usersSubject$.getValue().filter((user: IUser) => user.id !== id);
+    this.usersSubject$.next(filteredUsers);
     this.saveToLocalStorage();
   }
 
   public editUser(data: IUser): void {
-    let current = this.usersSubject$.value;
-    this.usersSubject$.next(current.map((user: IUser) => (user.id === data.id ? data : user)));
+    const updatedUsers = this.usersSubject$
+      .getValue()
+      .map((user: IUser) => (user.id === data.id ? data : user));
+    this.usersSubject$.next(updatedUsers);
     this.saveToLocalStorage();
   }
 
   public createUser(user: IUser): void {
-    this.usersSubject$.next([...this.usersSubject$.value, user]);
+    const usersWithAdded = [...this.usersSubject$.value, user];
+    this.usersSubject$.next(usersWithAdded);
     this.saveToLocalStorage();
   }
 }
