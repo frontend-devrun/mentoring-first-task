@@ -20,6 +20,10 @@ export class UsersService {
     return this.usersSubject$.asObservable();
   }
 
+  private saveToLocalStorage() {
+    this.localStorageService.setItem("users", this.usersSubject$.value);
+  }
+
   public getUsers(): Observable<IUser[]> {
     const stored = this.localStorageService.getItem("users");
 
@@ -30,26 +34,25 @@ export class UsersService {
       return this.usersApiService.getUsers().pipe(
         tap((users) => {
           this.usersSubject$.next(users);
-          this.localStorageService.setItem("users", users);
+          this.saveToLocalStorage();
         })
       );
     }
   }
 
   public deleteUser(id: number): void {
-    console.log(id);
     this.usersSubject$.next(this.usersSubject$.value.filter((user: IUser) => user.id !== id));
-    this.localStorageService.setItem("users", this.usersSubject$.value);
+    this.saveToLocalStorage();
   }
 
   public editUser(data: IUser): void {
     let current = this.usersSubject$.value;
     this.usersSubject$.next(current.map((user: IUser) => (user.id === data.id ? data : user)));
-    this.localStorageService.setItem("users", this.usersSubject$.value);
+    this.saveToLocalStorage();
   }
 
   public createUser(user: IUser): void {
     this.usersSubject$.next([...this.usersSubject$.value, user]);
-    this.localStorageService.setItem("users", this.usersSubject$.value);
+    this.saveToLocalStorage();
   }
 }
