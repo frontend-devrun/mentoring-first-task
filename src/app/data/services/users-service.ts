@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, of, tap } from "rxjs";
 
 import { IUser } from "../interfaces/user.interface";
 
-import { IStorage, LocalStorageService } from "./local-storage.service";
+import { LocalStorageService } from "./local-storage.service";
 import { UsersApiService } from "./users-api.service";
 
 @Injectable({
@@ -16,7 +16,7 @@ export class UsersService {
 
   public readonly usersApiService = inject(UsersApiService);
 
-  public readonly localStorageService = inject<IStorage<IUser[]>>(LocalStorageService);
+  public readonly localStorageService = inject(LocalStorageService);
 
   public get users$(): Observable<IUser[]> {
     return this.usersSubject$.asObservable();
@@ -45,13 +45,11 @@ export class UsersService {
       );
     }
   }
-
   public deleteUser(id: number): void {
     const filteredUsers = this.usersSubject$.getValue().filter((user: IUser) => user.id !== id);
     this.usersSubject$.next(filteredUsers);
     this.saveToLocalStorage();
   }
-
   public editUser(data: IUser): void {
     const updatedUsers = this.usersSubject$
       .getValue()

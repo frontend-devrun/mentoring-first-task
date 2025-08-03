@@ -8,13 +8,13 @@ export interface IStorage<T> {
 @Injectable({
   providedIn: "root"
 })
-export class LocalStorageService<T> implements IStorage<T> {
+export class LocalStorageService<T> implements IStorage<T | null> {
   public setItem(key: string, value: T) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  public getItem(key: string): T {
+  public getItem(key: string): T | null {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : <T>[];
+    return item ? JSON.parse(item) : null;
   }
 }
