@@ -1,27 +1,24 @@
 import { Injectable, inject } from "@angular/core";
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, map, exhaustMap, catchError, of } from "rxjs";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { catchError, exhaustMap, map, of } from "rxjs";
+import { ApiError, IUser } from "../../data/interfaces/user.interface";
 import { UsersApiService } from "../../data/services/users-api.service";
 import { loadUsers, loadUsersFailure, loadUsersSuccess } from "./user.actions";
 
 @Injectable()
-
 export class UsersEffects {
-    private actions$ = inject(Actions)
-    private usersServise = inject(UsersApiService)
+  private actions$ = inject(Actions);
+  private usersServise = inject(UsersApiService);
 
-    loadUsers$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(loadUsers),
-            exhaustMap(() => this.usersServise.getUsers()
-                .pipe(
-                    map(users => loadUsersSuccess({ payload: users })),
-                    catchError(error => of(loadUsersFailure({ error: error.message })))
-                )
-
-            )
+  loadUsers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loadUsers),
+      exhaustMap(() =>
+        this.usersServise.getUsers().pipe(
+          map((users: IUser[]) => loadUsersSuccess({ payload: users })),
+          catchError((error: ApiError) => of(loadUsersFailure({ error })))
         )
-    })
+      )
+    );
+  });
 }
-
-

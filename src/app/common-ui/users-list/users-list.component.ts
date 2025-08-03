@@ -1,18 +1,18 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { AsyncPipe, CommonModule } from "@angular/common";
+import { Component, inject, Input, OnInit } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDialog } from "@angular/material/dialog";
+import { MatDividerModule } from "@angular/material/divider";
+import { MatIconModule } from "@angular/material/icon";
+import { Store } from "@ngrx/store";
+import { IUser } from "../../data/interfaces/user.interface";
+import { addUser, deleteUser, editUser, loadUsers } from "../../store/users/user.actions";
+import { selectUsersError, selectUsersList } from "../../store/users/user.selectors";
 import { UserCardComponent } from "../user-card/user-card.component";
-import { Store } from '@ngrx/store';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { CreateEditUserComponent } from './create-edit-user/create-edit-user.component';
-import { IUser } from '../../data/interfaces/user.interface';
-import { addUser, deleteUser, editUser, loadUsers } from '../../store/users/user.actions';
-import { selectUsersError, selectUsersList } from '../../store/users/user.selectors';
+import { CreateEditUserComponent } from "./create-edit-user/create-edit-user.component";
 
 @Component({
-  selector: 'app-users-list',
+  selector: "app-users-list",
   standalone: true,
   imports: [
     CommonModule,
@@ -22,13 +22,11 @@ import { selectUsersError, selectUsersList } from '../../store/users/user.select
     MatButtonModule,
     MatDividerModule
   ],
-  templateUrl: './users-list.component.html',
-  styleUrl: './users-list.component.scss'
+  templateUrl: "./users-list.component.html",
+  styleUrl: "./users-list.component.scss"
 })
-
 export class UsersListComponent implements OnInit {
-
-  @Input() user!: IUser
+  @Input() user!: IUser;
 
   readonly dialog = inject(MatDialog);
 
@@ -41,19 +39,21 @@ export class UsersListComponent implements OnInit {
     this.store.dispatch(loadUsers());
   }
   addUser() {
-    this.dialog.open(CreateEditUserComponent)
+    this.dialog
+      .open(CreateEditUserComponent)
       .afterClosed()
       .subscribe((newUser: IUser) => {
-        if (newUser) this.store.dispatch(addUser({ user: newUser }))
+        if (newUser) {
+          this.store.dispatch(addUser({ user: newUser }));
+        }
       });
   }
 
   onDeleteUser(id: number) {
-    this.store.dispatch(deleteUser({ id }))
+    this.store.dispatch(deleteUser({ id }));
   }
 
   onEditUser(user: IUser) {
-    this.store.dispatch(editUser({ user }))
+    this.store.dispatch(editUser({ user }));
   }
-
 }

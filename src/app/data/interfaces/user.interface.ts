@@ -1,26 +1,25 @@
-
 export interface IUser {
-    id: number
-    name: string
-    username: string
-    email: string
-    phone: string,
-    company: {
-        bs: string
-        catchPhrase: string
-        name: string
-    }
-    website: string
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  phone: string;
+  address: {
+    city: string;
+  };
+  company: {
+    name: string;
+  };
+  website: string;
 }
 
 export interface ApiError {
-    message: string;
-    code?: number;
+  message: string;
+  code?: number;
 }
 
-
 export interface UsersState {
-    users: IUser[];
-    error: ApiError | null;
-    loading: boolean;
+  users: IUser[];
+  error: ApiError | null;
+  loading: boolean;
 }

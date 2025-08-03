@@ -76,9 +76,13 @@
     type="submit"
     mat-raised-button
     color="primary"
-    (click)="editUser(); createUser()"
+    (click)="saveUser()"
   >
     <mat-icon>add</mat-icon>
-    @if(data?.user){ Save }@else { Add }
+    @if (data && data.user) {
+      Save
+    } @else {
+      Add
+    }
   </button>
 </form>

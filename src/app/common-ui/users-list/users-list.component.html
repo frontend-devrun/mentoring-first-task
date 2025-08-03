@@ -1,9 +1,9 @@
-@for(user of users$| async; track user.id){
-<app-user-card
-  [user]="user"
-  (onEditUser)="onEditUser($event)"
-  (onDeleteUser)="onDeleteUser($event)"
-/>
+@for (user of users$ | async; track user.id) {
+  <app-user-card
+    [user]="user"
+    (onEditUser)="onEditUser($event)"
+    (onDeleteUser)="onDeleteUser($event)"
+  />
 }
 <button
   class="create-user-btn"
