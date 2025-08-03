@@ -16,7 +16,7 @@ export class UsersService {
 
   public readonly usersApiService = inject(UsersApiService);
 
-  public readonly localStorageService = inject(LocalStorageService);
+  public readonly localStorageService = inject(LocalStorageService<IUser[]>);
 
   public get users$(): Observable<IUser[]> {
     return this.usersSubject$.asObservable();
