@@ -14,14 +14,7 @@ import { CreateEditUserComponent } from "./create-edit-user/create-edit-user.com
 @Component({
   selector: "app-users-list",
   standalone: true,
-  imports: [
-    CommonModule,
-    UserCardComponent,
-    AsyncPipe,
-    MatIconModule,
-    MatButtonModule,
-    MatDividerModule
-  ],
+  imports: [CommonModule, UserCardComponent, AsyncPipe, MatIconModule, MatButtonModule, MatDividerModule],
   templateUrl: "./users-list.component.html",
   styleUrl: "./users-list.component.scss"
 })
@@ -44,16 +37,19 @@ export class UsersListComponent implements OnInit {
       .afterClosed()
       .subscribe((newUser: IUser) => {
         if (newUser) {
-          this.store.dispatch(addUser({ user: newUser }));
+          const action = addUser({ user: newUser });
+          this.store.dispatch(action);
         }
       });
   }
 
   onDeleteUser(id: number) {
-    this.store.dispatch(deleteUser({ id }));
+    const action = deleteUser({ id });
+    this.store.dispatch(action);
   }
 
   onEditUser(user: IUser) {
-    this.store.dispatch(editUser({ user }));
+    const action = editUser({ user });
+    this.store.dispatch(action);
   }
 }

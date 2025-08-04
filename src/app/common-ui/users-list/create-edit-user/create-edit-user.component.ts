@@ -15,14 +15,7 @@ interface DialogData {
 @Component({
   selector: "app-create-edit-user",
   standalone: true,
-  imports: [
-    CommonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatButtonModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, ReactiveFormsModule],
   templateUrl: "./create-edit-user.component.html",
   styleUrl: "./create-edit-user.component.scss"
 })
@@ -51,7 +44,6 @@ export class CreateEditUserComponent {
   }
 
   saveUser() {
-    console.log(this.form.value);
     this.dialogRef.close(this.form.getRawValue());
   }
 }
